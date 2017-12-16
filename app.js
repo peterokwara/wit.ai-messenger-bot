@@ -20,7 +20,11 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
 config.get('pageAccessToken');
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
+const WIT_TOKEN = (process.env.WIT_SERVER_ACCESS_TOKEN) ?
+(process.env.WIT_SERVER_ACCESS_TOKEN) :
+config.get('witToken');
+
+if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && WIT_TOKEN)) {
 console.error("Missing config values");
 process.exit(1);
 }
