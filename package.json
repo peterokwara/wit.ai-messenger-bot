@@ -1,0 +1,19 @@
+{
+  "name": "crypto_bot",
+  "version": "1.0.0",
+  "description": "Bot that displays prices of various cryptocurrencies.",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "crypto": "^1.0.1",
+    "express": "^4.16.2",
+    "node-fetch": "^1.7.3",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peter.0",
+  "license": "MIT"
+}
