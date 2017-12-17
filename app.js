@@ -192,11 +192,12 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function fetchPrice(currency) {
-    var coinmarketcap = new CoinMarketCap();    
-    var price = coinmarketcap.get(currency, coin => {
+    var coinmarketcap = new CoinMarketCap(); 
+    var price;   
+    coinmarketcap.get(currency, coin => {
+        price = coin.price_usd;
         console.log(JSON.stringify(coin.price_usd));
         return JSON.stringify(coin.price_usd);
       });
       return price;
-      return JSON.stringify(coin.price_usd);
 }
