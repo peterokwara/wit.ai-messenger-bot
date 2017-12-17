@@ -197,5 +197,6 @@ function fetchPrice(currency) {
         console.log(JSON.stringify(coin.price_usd));
         return JSON.stringify(coin.price_usd);
       });
-      return JSON.stringify(price);
+      return price;
+      return JSON.stringify(coin.price_usd);
 }
