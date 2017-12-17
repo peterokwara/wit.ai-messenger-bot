@@ -85,6 +85,7 @@ function receivedMessage(event) {
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
             if (cryptocurrency_type.value == 'Bitcoin') {
                 let price = fetchPrice('bitcoin');
+                console.log("bitcoin",price);
                 sendTextMessage(senderID, `The price of Bitcoin is ${price}`);
             } else if (cryptocurrency_type.value == 'IOTA') {
                 let price = fetchPrice('iota');
@@ -195,7 +196,7 @@ function fetchPrice(currency) {
     var coinmarketcap = new CoinMarketCap(); 
     var price;   
     coinmarketcap.get(currency, coin => {
-        price = coin.price_usd;
+        price = JSON.stringify(coin.price_usd);
         console.log(JSON.stringify(coin.price_usd));
         return JSON.stringify(coin.price_usd);
       });
