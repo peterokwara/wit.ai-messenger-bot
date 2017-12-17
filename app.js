@@ -77,7 +77,7 @@ function receivedMessage(event) {
             } else if (cryptocurrency_type.value == 'IOTA') {
                 sendTextMessage(senderID, "You say iota?");
             } else if (cryptocurrency_type.value = 'EOS') {
-                sendTextMessage(senderID, "You say iota?");
+                sendTextMessage(senderID, "You say eos?");
             } else if (cryptocurrency_type.value = 'Ethereum') {
                 sendTextMessage(senderID, "You say ethereum?");
             }
@@ -196,7 +196,7 @@ function fetchPrice(currency) {
     var coinmarketcap = new CoinMarketCap(); 
     var price;   
     coinmarketcap.get(currency, coin => {
-        price = JSON.stringify(coin.price_usd);
+        price = coin.price_usd;
         console.log(JSON.stringify(coin.price_usd));
         return JSON.stringify(coin.price_usd);
       });
