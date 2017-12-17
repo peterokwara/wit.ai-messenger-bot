@@ -4,6 +4,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
 const config = require('config');
+const CoinMarketCap = require("node-coinmarketcap");
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
     process.env.MESSENGER_APP_SECRET :
@@ -66,48 +67,67 @@ function receivedMessage(event) {
     var messageAttachments = message.attachments;
     var quickReply = message.quick_reply;
 
-}
+    const cryptocurrency_type = firstEntity(message.nlp, 'cryptocurrency_type');
+    const query_price = firstEntity(message.nlp, 'query_price');
 
-// Send a receipt at the end of the transaction
-function sendMessage(recipientId) {
-
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            "text": "Here is your receipt"
+    if (messageText) {
+        if (cryptocurrency_type && cryptocurrency_type.confidence > 0.8 && !query_price) {
+            if (cryptocurrency_type.value == 'Bitcoin') {
+                sendTextMessage(senderID, "You say bitcoin?");
+            } else if (cryptocurrency_type.value == 'IOTA') {
+                sendTextMessage(senderID, "You say iota?");
+            } else if (cryptocurrency_type.value = 'EOS') {
+                sendTextMessage(senderID, "You say iota?");
+            } else if (cryptocurrency_type.value = 'Ethereum') {
+                sendTextMessage(senderID, "You say ethereum?");
+            }
         }
-    };
+        if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
+            if (cryptocurrency_type.value == 'Bitcoin') {
+                let price = fetchPrice('bitcoin');
+                sendTextMessage(senderID, `The price of Bitcoin is ${price}`);
+            } else if (cryptocurrency_type.value == 'IOTA') {
+                let price = fetchPrice('iota');
+                sendTextMessage(senderID, `The price of IOTA is ${price}`);
+            } else if (cryptocurrency_type.value == 'EOS') {
+                let price = fetchPrice('eos');
+                sendTextMessage(senderID, `The price of EOS is ${price}`);
+            } else if (cryptocurrency_type.value == 'Ethereum') {
+                let price = fetchPrice('ethereum');
+                sendTextMessage(senderID, `The price of Ethereum is ${price}`);
+            }
 
-    callSendAPI(messageData);
+        }
+    }
 }
 
 // Sending messages
 function callSendAPI(messageData) {
-    return new Promise((resolve, reject) => {
-        request({
-            uri: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {
-                access_token: PAGE_ACCESS_TOKEN
-            },
-            method: 'POST',
-            json: messageData,
-        }, (error, response, body) => {
-            if (!error && response.statusCode == 200) {
-                const recipientId = body.recipient_id;
-                const messageId = body.message_id;
-                console.log("Successfully sent generic message with id %s to recipient %s", messageId, recipientId);
-                resolve();
+    request({
+        uri: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {
+            access_token: PAGE_ACCESS_TOKEN
+        },
+        method: 'POST',
+        json: messageData
+
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var recipientId = body.recipient_id;
+            var messageId = body.message_id;
+
+            if (messageId) {
+                console.log("Successfully sent message with id %s to recipient %s",
+                    messageId, recipientId);
             } else {
-                console.error("Unable to send message.");
-                console.error(body);
-                console.error(error);
-                reject();
+                console.log("Successfully called Send API for recipient %s",
+                    recipientId);
             }
-        });
+        } else {
+            console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+        }
     });
-};
+}
 
 
 function verifyRequestSignature(req, res, buf) {
@@ -148,7 +168,7 @@ app.post('/webhook', function (req, res) {
             pageEntry.messaging.forEach(function (messagingEvent) {
                 if (messagingEvent.message) {
                     receivedMessage(messagingEvent);
-                } else  {
+                } else {
                     console.log("Webhook received unknown messagingEvent: ", messagingEvent);
                 }
             });
@@ -156,3 +176,26 @@ app.post('/webhook', function (req, res) {
         res.sendStatus(200);
     }
 });
+
+function sendTextMessage(recipientId, messageText) {
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            text: messageText,
+            metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+    };
+
+    callSendAPI(messageData);
+}
+
+function fetchPrice(currency) {
+    var coinmarketcap = new CoinMarketCap();    
+    coinmarketcap.get(currency, coin => {
+        console.log(JSON.stringify(coin.price_usd));
+        var price = JSON.stringify(coin.price_usd);
+      });
+      return price;
+}
