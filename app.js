@@ -85,7 +85,7 @@ function receivedMessage(event) {
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
             if (cryptocurrency_type.value == 'Bitcoin') {
                 let price = fetchPrice('bitcoin');
-                console.log("bitcoin",price);
+                console.log("bitcoin",JSON.stringify(price));
                 sendTextMessage(senderID, `The price of Bitcoin is ${price}`);
             } else if (cryptocurrency_type.value == 'IOTA') {
                 let price = fetchPrice('iota');
