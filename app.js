@@ -201,5 +201,6 @@ function fetchPrice(currency) {
         return JSON.stringify(coin.price_usd);
       });
       console.log("bitcoin pirce",price);
+      typeof price;
       return price;
 }
