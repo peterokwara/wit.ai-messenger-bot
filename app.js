@@ -83,16 +83,13 @@ function receivedMessage(event) {
         }
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
             if (cryptocurrency_type.value == 'Bitcoin') {
-                getPrice(currency, senderID);
+                getPrice("bitcoin", senderID);
             } else if (cryptocurrency_type.value == 'IOTA') {
-                let price = fetchPrice('iota');
-                sendTextMessage(senderID, `The price of IOTA is ${price}`);
+                getPrice("iota", senderID);
             } else if (cryptocurrency_type.value == 'EOS') {
-                let price = fetchPrice('eos');
-                sendTextMessage(senderID, `The price of EOS is ${price}`);
+                getPrice("eos", senderID);
             } else if (cryptocurrency_type.value == 'Ethereum') {
-                let price = fetchPrice('ethereum');
-                sendTextMessage(senderID, `The price of Ethereum is ${price}`);
+                getPrice("ethereum", senderID);
             }
 
         }
@@ -202,6 +199,6 @@ function getPrice(currency, senderID) {
 
 
 function printPrice(currency, price, senderID) {
-    let cost  = `The price of ${currency} is ${price}US Dollars`;
+    let cost  = `The price of ${currency} is ${price} US Dollars`;
     sendTextMessage(senderID, cost);
 }
