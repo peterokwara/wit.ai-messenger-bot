@@ -92,7 +92,7 @@ function receivedMessage(event) {
                 case 'Ethereum':
                     endTextMessage(senderID, "You say Ethereum?");
                     break;
-                case 'EOS':
+                case EOS:
                     sendTextMessage(senderID, "You say Eos?");
                     break;
             }
