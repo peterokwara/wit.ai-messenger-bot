@@ -4,7 +4,6 @@ const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
 const config = require('config');
-const CoinMarketCap = require("node-coinmarketcap");
 
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
     process.env.MESSENGER_APP_SECRET :
@@ -84,9 +83,7 @@ function receivedMessage(event) {
         }
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
             if (cryptocurrency_type.value == 'Bitcoin') {
-                let price = fetchPrice('bitcoin');
-                console.log("bitcoin",JSON.stringify(price));
-                sendTextMessage(senderID, `The price of Bitcoin is ${price}`);
+                getPrice(currency, senderID);
             } else if (cryptocurrency_type.value == 'IOTA') {
                 let price = fetchPrice('iota');
                 sendTextMessage(senderID, `The price of IOTA is ${price}`);
@@ -192,15 +189,19 @@ function sendTextMessage(recipientId, messageText) {
     callSendAPI(messageData);
 }
 
-function fetchPrice(currency) {
-    var coinmarketcap = new CoinMarketCap(); 
-    var price;   
-    coinmarketcap.get(currency, coin => {
-        price = coin.price_usd;
-        console.log(JSON.stringify(coin.price_usd));
-        return JSON.stringify(coin.price_usd);
-      });
-      console.log("bitcoin pirce",price);
-      typeof price;
-      return price;
+function getPrice(currency, senderID) {
+    axios.get(`https://api.coinmarketcap.com/v1/ticker/${currency}/`)
+        .then(response => {
+            let price = response.data[0].price_usd;
+            printPrice(currency,price,senderID)
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+
+function printPrice(currency, price, senderID) {
+    let cost  = `The price of ${currency} is ${price}US Dollars`;
+    sendTextMessage(senderID, cost);
 }
