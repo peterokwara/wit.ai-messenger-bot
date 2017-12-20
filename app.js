@@ -74,14 +74,14 @@ function receivedMessage(event) {
     if (messageText) {
         if (cryptocurrency_type && cryptocurrency_type.confidence > 0.8 && !query_price) {
             if (cryptocurrency_type.value == 'Bitcoin') {
-                sendTextMessage(senderID, "You say bitcoin?");
+                sendTextMessage(senderID, "You say Bitcoin?");
             } else if (cryptocurrency_type.value == 'IOTA') {
-                sendTextMessage(senderID, "You say iota?");
-            } else if (cryptocurrency_type.value = 'EOS') {
-                sendTextMessage(senderID, "You say eos??????");
+                sendTextMessage(senderID, "You say Iota?");
             } else if (cryptocurrency_type.value = 'Ethereum') {
-                sendTextMessage(senderID, "You say ethereum??????????");
-            }
+                sendTextMessage(senderID, "You say Ethereum?");
+            }else if (cryptocurrency_type.value = 'EOS') {
+                sendTextMessage(senderID, "You say Eos?");
+            } 
         }
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
             if (cryptocurrency_type.value == 'Bitcoin') {
