@@ -83,7 +83,7 @@ function receivedMessage(event) {
             //     sendTextMessage(senderID, "You say Eos?");
             // }
             switch (cryptocurrency_type.value) {
-                case Bitcoin:
+                case 'Bitcoin':
                     sendTextMessage(senderID, "You say Bitcoin?");
                     break;
                 case IOTA:
