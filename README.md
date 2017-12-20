@@ -72,7 +72,7 @@ Ensure that you have changed your environment variables in the config/default.js
 
 ## Authors
 
-* **Peter Okwara** - *Initial work* - [here](https://github.com/peterokwara)
-* **Shadrack Winters** - *Contributor* - [here](https://github.com/ShadrackNdolo)
+* **Peter Okwara** - *Initial work* 
+* **Shadrack Winters** - *Contributor* - [link](https://github.com/ShadrackNdolo)
 
 
