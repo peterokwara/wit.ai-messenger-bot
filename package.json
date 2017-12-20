@@ -4,6 +4,7 @@
   "description": "Bot that displays prices of various cryptocurrencies.",
   "main": "app.js",
   "dependencies": {
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "config": "^1.28.1",
     "crypto": "^1.0.1",
