@@ -73,15 +73,29 @@ function receivedMessage(event) {
 
     if (messageText) {
         if (cryptocurrency_type && cryptocurrency_type.confidence > 0.8 && !query_price) {
-            if (cryptocurrency_type.value == 'Bitcoin') {
-                sendTextMessage(senderID, "You say Bitcoin?");
-            } else if (cryptocurrency_type.value == 'IOTA') {
-                sendTextMessage(senderID, "You say Iota?");
-            } else if (cryptocurrency_type.value = 'Ethereum') {
-                sendTextMessage(senderID, "You say Ethereum?");
-            }else if (cryptocurrency_type.value = 'EOS') {
-                sendTextMessage(senderID, "You say Eos?");
-            } 
+            // if (cryptocurrency_type.value == 'Bitcoin') {
+            //     sendTextMessage(senderID, "You say Bitcoin?");
+            // } else if (cryptocurrency_type.value == 'IOTA') {
+            //     sendTextMessage(senderID, "You say Iota?");
+            // } else if (cryptocurrency_type.value = 'Ethereum') {
+            //     sendTextMessage(senderID, "You say Ethereum?");
+            // }else if (cryptocurrency_type.value = 'EOS') {
+            //     sendTextMessage(senderID, "You say Eos?");
+            // }
+            switch (cryptocurrency_type.value) {
+                case Bitcoin:
+                    sendTextMessage(senderID, "You say Bitcoin?");
+                    break;
+                case IOTA:
+                    sendTextMessage(senderID, "You say Iota?");
+                    break;
+                case Ethereum:
+                    endTextMessage(senderID, "You say Ethereum?");
+                    break;
+                case EOS:
+                    sendTextMessage(senderID, "You say Eos?");
+                    break;
+            }
         }
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
             if (cryptocurrency_type.value == 'Bitcoin') {
@@ -192,7 +206,7 @@ function getPrice(currency, senderID) {
     axios.get(`https://api.coinmarketcap.com/v1/ticker/${currency}/`)
         .then(response => {
             let price = response.data[0].price_usd;
-            printPrice(currency,price,senderID)
+            printPrice(currency, price, senderID)
         })
         .catch(error => {
             console.log(error);
@@ -201,6 +215,6 @@ function getPrice(currency, senderID) {
 
 
 function printPrice(currency, price, senderID) {
-    let cost  = `The price of ${currency} is ${price} US Dollars`;
+    let cost = `The price of ${currency} is ${price} US Dollars`;
     sendTextMessage(senderID, cost);
 }
