@@ -98,16 +98,30 @@ function receivedMessage(event) {
             }
         }
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
-            if (cryptocurrency_type.value == 'Bitcoin') {
-                getPrice("bitcoin", senderID);
-            } else if (cryptocurrency_type.value == 'IOTA') {
-                getPrice("iota", senderID);
-            } else if (cryptocurrency_type.value == 'EOS') {
-                getPrice("eos", senderID);
-            } else if (cryptocurrency_type.value == 'Ethereum') {
-                getPrice("ethereum", senderID);
-            }
+            // if (cryptocurrency_type.value == 'Bitcoin') {
+            //     getPrice("bitcoin", senderID);
+            // } else if (cryptocurrency_type.value == 'IOTA') {
+            //     getPrice("iota", senderID);
+            // } else if (cryptocurrency_type.value == 'EOS') {
+            //     getPrice("eos", senderID);
+            // } else if (cryptocurrency_type.value == 'Ethereum') {
+            //     getPrice("ethereum", senderID);
+            // }
 
+            switch (cryptocurrency_type.value) {
+                case 'Bitcoin':
+                getPrice("bitcoin", senderID);
+                    break;
+                case 'IOTA':
+                getPrice("iota", senderID);
+                    break;
+                case 'Ethereum':
+                getPrice("eos", senderID);
+                    break;
+                case 'EOS':
+                getPrice("eos", senderID);
+                    break;
+            }
         }
     }
 }
