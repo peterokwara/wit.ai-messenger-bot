@@ -1,12 +1,14 @@
+// Load the necessary node modules
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const express = require('express');
-const fetch = require('node-fetch');
 const request = require('request');
 const config = require('config');
 const axios = require("axios")
 
-
+// Set the necessary configuration variables which are
+// App secret, validation token and page access token
+// Throw error if they are not set in the config/default.json file
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
     process.env.MESSENGER_APP_SECRET :
     config.get('appSecret');
@@ -24,6 +26,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
     process.exit(1);
 }
 
+// Set up express
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -31,6 +34,7 @@ app.use(bodyParser.json({
     verify: verifyRequestSignature
 }));
 
+// Validation token for validation with facebook webhook
 app.get('/webhook', function (req, res) {
     if (req.query['hub.mode'] === 'subscribe' &&
         req.query['hub.verify_token'] === VALIDATION_TOKEN) {
@@ -42,15 +46,17 @@ app.get('/webhook', function (req, res) {
     }
 });
 
-
+// Function to retrieve data from custom nlp wit.ai
 function firstEntity(nlp, name) {
     return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
 
+// Start express server
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
 });
 
+// Function that handles what happens when the server receives a text message
 function receivedMessage(event) {
     var senderID = event.sender.id;
     var recipientID = event.recipient.id;
@@ -71,17 +77,10 @@ function receivedMessage(event) {
     const cryptocurrency_type = firstEntity(message.nlp, 'cryptocurrency_type');
     const query_price = firstEntity(message.nlp, 'query_price');
 
+    // If the server receives a message
     if (messageText) {
+        // Identify if the message contains info only on cryptocurrency type
         if (cryptocurrency_type && cryptocurrency_type.confidence > 0.8 && !query_price) {
-            // if (cryptocurrency_type.value == 'Bitcoin') {
-            //     sendTextMessage(senderID, "You say Bitcoin?");
-            // } else if (cryptocurrency_type.value == 'IOTA') {
-            //     sendTextMessage(senderID, "You say Iota?");
-            // } else if (cryptocurrency_type.value = 'Ethereum') {
-            //     sendTextMessage(senderID, "You say Ethereum?");
-            // }else if (cryptocurrency_type.value = 'EOS') {
-            //     sendTextMessage(senderID, "You say Eos?");
-            // }
             switch (cryptocurrency_type.value) {
                 case 'Bitcoin':
                     sendTextMessage(senderID, "You say Bitcoin?");
@@ -97,29 +96,21 @@ function receivedMessage(event) {
                     break;
             }
         }
+        // Identify if message contains info on cryptocurrency type and price
+        // then send the latest price
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
-            // if (cryptocurrency_type.value == 'Bitcoin') {
-            //     getPrice("bitcoin", senderID);
-            // } else if (cryptocurrency_type.value == 'IOTA') {
-            //     getPrice("iota", senderID);
-            // } else if (cryptocurrency_type.value == 'EOS') {
-            //     getPrice("eos", senderID);
-            // } else if (cryptocurrency_type.value == 'Ethereum') {
-            //     getPrice("ethereum", senderID);
-            // }
-
             switch (cryptocurrency_type.value) {
                 case 'Bitcoin':
-                getPrice("bitcoin", senderID);
+                    getPrice("bitcoin", senderID);
                     break;
                 case 'IOTA':
-                getPrice("iota", senderID);
+                    getPrice("iota", senderID);
                     break;
                 case 'Ethereum':
-                getPrice("ethereum", senderID);
+                    getPrice("ethereum", senderID);
                     break;
                 case 'EOS':
-                getPrice("eos", senderID);
+                    getPrice("eos", senderID);
                     break;
             }
         }
@@ -154,7 +145,7 @@ function callSendAPI(messageData) {
     });
 }
 
-
+// Facebook code for configuration
 function verifyRequestSignature(req, res, buf) {
     var signature = req.headers["x-hub-signature"];
 
@@ -177,6 +168,7 @@ function verifyRequestSignature(req, res, buf) {
     }
 };
 
+// Facebook code for configuration
 app.post('/webhook', function (req, res) {
     var data = req.body;
     var orderSubtitle;
@@ -202,6 +194,7 @@ app.post('/webhook', function (req, res) {
     }
 });
 
+// Structure message to be sent
 function sendTextMessage(recipientId, messageText) {
     var messageData = {
         recipient: {
@@ -216,6 +209,7 @@ function sendTextMessage(recipientId, messageText) {
     callSendAPI(messageData);
 }
 
+// Gets prices from coinmarketcap
 function getPrice(currency, senderID) {
     axios.get(`https://api.coinmarketcap.com/v1/ticker/${currency}/`)
         .then(response => {
@@ -227,7 +221,7 @@ function getPrice(currency, senderID) {
         });
 }
 
-
+// Sends message containing price info
 function printPrice(currency, price, senderID) {
     let cost = `The price of ${currency} is ${price} US Dollars`;
     sendTextMessage(senderID, cost);

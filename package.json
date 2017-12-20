@@ -9,9 +9,6 @@
     "config": "^1.28.1",
     "crypto": "^1.0.1",
     "express": "^4.16.2",
-    "node-coinmarketcap": "^0.2.0",
-    "node-fetch": "^1.7.3",
-    "node-wit": "^4.3.0",
     "request": "^2.83.0"
   },
   "devDependencies": {},
