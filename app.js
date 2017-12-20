@@ -116,7 +116,7 @@ function receivedMessage(event) {
                 getPrice("iota", senderID);
                     break;
                 case 'Ethereum':
-                getPrice("eos", senderID);
+                getPrice("ethereum", senderID);
                     break;
                 case 'EOS':
                 getPrice("eos", senderID);
