@@ -78,9 +78,9 @@ function receivedMessage(event) {
             } else if (cryptocurrency_type.value == 'IOTA') {
                 sendTextMessage(senderID, "You say iota?");
             } else if (cryptocurrency_type.value = 'EOS') {
-                sendTextMessage(senderID, "You say eos?");
+                sendTextMessage(senderID, "You say eos??????");
             } else if (cryptocurrency_type.value = 'Ethereum') {
-                sendTextMessage(senderID, "You say ethereum?");
+                sendTextMessage(senderID, "You say ethereum??????????");
             }
         }
         if (query_price && query_price.confidence > 0.8 && cryptocurrency_type && cryptocurrency_type.confidence > 0.8) {
