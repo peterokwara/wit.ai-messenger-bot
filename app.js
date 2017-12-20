@@ -86,13 +86,13 @@ function receivedMessage(event) {
                 case 'Bitcoin':
                     sendTextMessage(senderID, "You say Bitcoin?");
                     break;
-                case IOTA:
+                case 'IOTA':
                     sendTextMessage(senderID, "You say Iota?");
                     break;
-                case Ethereum:
+                case 'Ethereum':
                     endTextMessage(senderID, "You say Ethereum?");
                     break;
-                case EOS:
+                case 'EOS':
                     sendTextMessage(senderID, "You say Eos?");
                     break;
             }
