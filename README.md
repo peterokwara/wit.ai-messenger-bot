@@ -2,6 +2,13 @@
 
 A messenger bot that understands what cryptocurrency the user is asking the price about and then sends the price to the user.
 
+## Video Example
+
+A video of the code running
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=e3wnCErhFBU" target="_blank"><p align="center"><img src="./Assets/WP_20171107_17_07_56_Pro.jpg" 
+alt="wit.ai messenger bot"/></p></a>
+
 ## Getting Started
 
 Clone the repository. To run it locally, you just run 
