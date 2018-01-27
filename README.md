@@ -1,6 +1,6 @@
-# Wit.ai Messenger Bot
+# Wit.ai Messenger Bot Tutorial Starter
 
-A messenger bot that understands what cryptocurrency the user is asking the price about and then sends the price to the user.
+A messenger bot that understands what cryptocurrency the user is asking the price about and then sends the price to the user. This is the tutorial starter.
 
 ## Video Example
 
