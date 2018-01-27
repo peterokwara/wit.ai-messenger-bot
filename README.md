@@ -77,9 +77,5 @@ Ensure that you have changed your environment variables in the config/default.js
 * [Wit Ai](https://wit.ai/) - For the custom nlp
 * [Facebook Messenger](https://developers.facebook.com/products/messenger/overview/) - Facebook messenger platform
 
-## Authors
-
-* **Peter Okwara** - *Initial work* 
-* **Shadrack Winters** - *Contributor* - [link](https://github.com/ShadrackNdolo)
 
 
