@@ -1,6 +1,6 @@
-# Wit.ai Messenger Bot
+# Wit.ai Messenger Bot Tutorial Starter
 
-A messenger bot that understands what cryptocurrency the user is asking the price about and then sends the price to the user.
+A messenger bot that understands what cryptocurrency the user is asking the price about and then sends the price to the user. This is the tutorial starter.
 
 ## Video Example
 
@@ -77,9 +77,5 @@ Ensure that you have changed your environment variables in the config/default.js
 * [Wit Ai](https://wit.ai/) - For the custom nlp
 * [Facebook Messenger](https://developers.facebook.com/products/messenger/overview/) - Facebook messenger platform
 
-## Authors
-
-* **Peter Okwara** - *Initial work* 
-* **Shadrack Winters** - *Contributor* - [link](https://github.com/ShadrackNdolo)
 
 

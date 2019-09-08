@@ -1,6 +1,5 @@
 {
-    "appSecret": "e34cc560af2a0a9c159cf3ac7301a7fb",
-    "pageAccessToken": "EAAB7I8UTkAMBAMKKqwuNZBcHRMBTj8HjopVCTHURRKdK3F9bi2zXrWQvwZB6tEAAGxwmhCPq5PAiGw6XnvtzGz2ipZADvdnHKmA1CGY93p9unZBpHHiZBVAtjIJZAPw6WPOZA3wHZAHAgzSIq8DHkwYOel6lLtuCVQ2MEowcSnD4dgZDZD",
-    "validationToken": "my_name_e_jeff",
-    "witToken":"CQ4T4RWF3SXBPWQ3XAZT64M6VECUT3J6"
+    "appSecret": "",
+    "pageAccessToken": "",
+    "validationToken": ""
 }
